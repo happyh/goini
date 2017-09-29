@@ -31,7 +31,7 @@ func SetConfig(filepath string) *Config {
 }
 
 //To obtain corresponding value of the key values
-func (c *Config) GetValue(section, name string) string {
+func (c *Config) GetValue(section, name, defaultvalue string) string {
 	c.ReadList()
 	conf := c.ReadList()
 	for _, v := range conf {
@@ -41,7 +41,7 @@ func (c *Config) GetValue(section, name string) string {
 			}
 		}
 	}
-	return "no value"
+	return defaultvalue
 }
 
 //Set the corresponding value of the key value, if not add, if there is a key change
@@ -117,7 +117,7 @@ func (c *Config) ReadList() []map[string]map[string]string {
 		}
 		switch {
 		case len(line) == 0:
-		case string(line[0]) == "#":	//增加配置文件备注
+		case string(line[0]) == "#": //增加配置文件备注
 		case line[0] == '[' && line[len(line)-1] == ']':
 			section = strings.TrimSpace(line[1 : len(line)-1])
 			data = make(map[string]map[string]string)
