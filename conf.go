@@ -36,8 +36,13 @@ func (c *Config) GetValue(section, name, defaultvalue string) string {
 	conf := c.ReadList()
 	for _, v := range conf {
 		for key, value := range v {
+			fmt.Println("key:", key, ",value:", value)
 			if key == section {
-				return value[name]
+				if retv, ok := value[name]; ok {
+					return retv
+				} else {
+					break
+				}
 			}
 		}
 	}
